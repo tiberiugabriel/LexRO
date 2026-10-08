@@ -40,12 +40,14 @@ It always **answers in the language you write in** (English, Romanian or other l
 
 ### Installation
 
+**Quick install for Claude Code:** `npx skills add tiberiugabriel/LexRO -g -a claude-code` or `curl -fsSL https://raw.githubusercontent.com/tiberiugabriel/LexRO/main/install.sh | bash`. Details below.
+
 The ready-to-upload package is **`dist/lexro.skill`** (a ZIP archive containing the `lexro/` folder).
 
 #### Option A: Claude app (claude.ai web or desktop)
 
 **Free, Pro, Max:**
-1. Download `dist/lexro.skill`. If your browser or the upload dialog requires a `.zip` file, rename it to `lexro.zip`.
+1. Download [`dist/lexro.skill`](https://github.com/tiberiugabriel/LexRO/raw/main/dist/lexro.skill). If your browser or the upload dialog requires a `.zip` file, rename it to `lexro.zip`.
 2. Go to **Settings → Capabilities** and turn on **Code execution and file creation**.
 3. Go to **Customize → Skills**, click **+**, then **+ Create skill → Upload a skill**.
 4. Upload the file.
@@ -58,6 +60,47 @@ Menu names can change between app versions; see Anthropic's article [Use skills 
 #### Option B: Claude Code
 
 Skills installed in the Claude app are **not** synced to Claude Code; install them separately. Claude Code reads personal skills from `~/.claude/skills/<skill-name>/SKILL.md` (all projects) and project skills from `.claude/skills/<skill-name>/SKILL.md` (that project only). See the [Claude Code skills docs](https://code.claude.com/docs/en/skills).
+
+##### B1. One command (recommended)
+
+**With the skills CLI** (needs [Node.js](https://nodejs.org)):
+
+```bash
+npx skills add tiberiugabriel/LexRO -g -a claude-code
+```
+
+- `-g` installs for your user (all projects). Without it, the skill goes into the current project's `.claude/skills/`.
+- `-a claude-code` targets Claude Code. Add `-y` to skip the confirmation prompts.
+- The [skills CLI](https://github.com/vercel-labs/skills) is a third-party tool by Vercel Labs and also supports other coding agents.
+
+**With the install script** (no Node.js needed):
+
+macOS / Linux:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/tiberiugabriel/LexRO/main/install.sh | bash
+```
+
+Windows (PowerShell):
+
+```powershell
+irm https://raw.githubusercontent.com/tiberiugabriel/LexRO/main/install.ps1 | iex
+```
+
+The script downloads the repository from GitHub, copies `skills/lexro` to `~/.claude/skills/lexro` and replaces an older LexRO install if there is one. Options:
+
+| Option | macOS / Linux | Windows |
+|---|---|---|
+| Current project only | `curl -fsSL …/install.sh \| bash -s -- --project` | `& ([scriptblock]::Create((irm …/install.ps1))) -Project` |
+| Custom folder | `… \| bash -s -- --dir <path>` | `… -Dir <path>` |
+| Uninstall | `… \| bash -s -- --uninstall` | `… -Uninstall` |
+| Specific version | `… \| LEXRO_REF=<tag or branch> bash` | `$env:LEXRO_REF="<tag or branch>"` before running |
+
+(`…` stands for `https://raw.githubusercontent.com/tiberiugabriel/LexRO/main`.)
+
+Piping a script from the internet into your shell runs it with your permissions. If you prefer, open [`install.sh`](install.sh) or [`install.ps1`](install.ps1) first and read it, or use the manual method below.
+
+##### B2. Manual
 
 **macOS / Linux (personal, all projects):**
 
@@ -79,17 +122,17 @@ Get-ChildItem "$env:USERPROFILE\.claude\skills\lexro"
 **From a clone of this repository:**
 
 ```bash
-git clone <repository-url> LexRO
-cp -R LexRO/lexro ~/.claude/skills/lexro
+git clone https://github.com/tiberiugabriel/LexRO.git
+cp -R LexRO/skills/lexro ~/.claude/skills/lexro
 ```
 
 To make `git pull` update the installed skill automatically, use a symbolic link instead of a copy:
 
 ```bash
-ln -s "$(pwd)/LexRO/lexro" ~/.claude/skills/lexro
+ln -s "$(pwd)/LexRO/skills/lexro" ~/.claude/skills/lexro
 ```
 
-**Project-only:** copy the `lexro/` folder to `.claude/skills/lexro/` inside your project.
+**Project-only:** copy the `skills/lexro/` folder to `.claude/skills/lexro/` inside your project.
 
 Claude Code watches the skills folders, so changes usually apply without a restart. If `~/.claude/skills` did not exist when the session started, restart Claude Code.
 
@@ -114,26 +157,30 @@ Example requests:
 ### Updating and uninstalling
 
 - **Claude app:** delete the old skill in **Customize → Skills**, then upload the new `lexro.skill`.
-- **Claude Code:** replace the folder (`rm -rf ~/.claude/skills/lexro`, then reinstall), or `git pull` if you used a symbolic link.
-- To uninstall, delete the skill from the app and/or remove `~/.claude/skills/lexro`.
+- **Claude Code:** run the same install command again (`npx skills add …` or the install script). If you installed manually, replace the folder, or `git pull` if you used a symbolic link.
+- **Uninstall from Claude Code:** `curl -fsSL https://raw.githubusercontent.com/tiberiugabriel/LexRO/main/install.sh | bash -s -- --uninstall` (or `-Uninstall` with `install.ps1`), or simply delete `~/.claude/skills/lexro`.
+- **Uninstall from the Claude app:** delete the skill in **Customize → Skills**.
 
 ### Repository structure
 
 ```
 LexRO/
 ├── README.md                 # this file (EN + RO)
-├── lexro/                    # the skill
-│   ├── SKILL.md              # workflow, core rules, /lexro trigger
-│   └── references/           # intake, domain files, sources, escalation, formats
+├── install.sh                # one-command installer for Claude Code (macOS / Linux)
+├── install.ps1               # one-command installer for Claude Code (Windows)
+├── skills/
+│   └── lexro/                # the skill
+│       ├── SKILL.md          # workflow, core rules, /lexro trigger
+│       └── references/       # intake, domain files, sources, escalation, formats
 ├── dist/
-│   └── lexro.skill           # ready-to-upload package (ZIP)
+│   └── lexro.skill           # ready-to-upload package for the Claude app (ZIP)
 └── scripts/
     └── package.sh            # rebuilds dist/lexro.skill
 ```
 
 ### Rebuilding the package
 
-After editing files in `lexro/`, rebuild the package:
+After editing files in `skills/lexro/`, rebuild the package:
 
 ```bash
 ./scripts/package.sh
@@ -141,7 +188,7 @@ After editing files in `lexro/`, rebuild the package:
 
 ### Limitations
 
-- `lexro/references/acts-registry.md` is a **starting map compiled by an AI model, not verified act by act**. Each entry has a confidence level (H / M / ID?). The skill re-verifies acts live, but correcting the registry improves results.
+- `skills/lexro/references/acts-registry.md` is a **starting map compiled by an AI model, not verified act by act**. Each entry has a confidence level (H / M / ID?). The skill re-verifies acts live, but correcting the registry improves results.
 - The URLs of official sources are base addresses written from memory; verify them once.
 - The skill can be wrong. Legislation changes often, especially tax rules.
 
@@ -183,12 +230,14 @@ LexRO este un skill Claude pentru **conformitatea în comerțul electronic, plat
 
 ### Instalare
 
+**Instalare rapidă pentru Claude Code:** `npx skills add tiberiugabriel/LexRO -g -a claude-code` sau `curl -fsSL https://raw.githubusercontent.com/tiberiugabriel/LexRO/main/install.sh | bash`. Detalii mai jos.
+
 Pachetul gata de încărcat este **`dist/lexro.skill`** (o arhivă ZIP care conține folderul `lexro/`).
 
 #### Varianta A: aplicația Claude (claude.ai web sau desktop)
 
 **Free, Pro, Max:**
-1. Descarcă `dist/lexro.skill`. Dacă browserul sau fereastra de upload cere un fișier `.zip`, redenumește-l în `lexro.zip`.
+1. Descarcă [`dist/lexro.skill`](https://github.com/tiberiugabriel/LexRO/raw/main/dist/lexro.skill). Dacă browserul sau fereastra de upload cere un fișier `.zip`, redenumește-l în `lexro.zip`.
 2. Mergi la **Settings → Capabilities** și activează **Code execution and file creation**.
 3. Mergi la **Customize → Skills**, apasă **+**, apoi **+ Create skill → Upload a skill**.
 4. Încarcă fișierul.
@@ -201,6 +250,47 @@ Denumirile meniurilor se pot schimba de la o versiune la alta; pașii actuali su
 #### Varianta B: Claude Code
 
 Skill-urile instalate în aplicația Claude **nu** se sincronizează cu Claude Code; trebuie instalate separat. Claude Code citește skill-urile personale din `~/.claude/skills/<nume-skill>/SKILL.md` (toate proiectele) și pe cele de proiect din `.claude/skills/<nume-skill>/SKILL.md` (doar acel proiect). Vezi [documentația Claude Code despre skill-uri](https://code.claude.com/docs/en/skills).
+
+##### B1. O singură comandă (recomandat)
+
+**Cu CLI-ul skills** (necesită [Node.js](https://nodejs.org)):
+
+```bash
+npx skills add tiberiugabriel/LexRO -g -a claude-code
+```
+
+- `-g` instalează pentru utilizatorul tău (toate proiectele). Fără el, skill-ul ajunge în `.claude/skills/` din proiectul curent.
+- `-a claude-code` alege Claude Code. Adaugă `-y` ca să sari peste confirmări.
+- [CLI-ul skills](https://github.com/vercel-labs/skills) este un instrument terț, de la Vercel Labs, și funcționează și cu alți agenți de programare.
+
+**Cu scriptul de instalare** (nu necesită Node.js):
+
+macOS / Linux:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/tiberiugabriel/LexRO/main/install.sh | bash
+```
+
+Windows (PowerShell):
+
+```powershell
+irm https://raw.githubusercontent.com/tiberiugabriel/LexRO/main/install.ps1 | iex
+```
+
+Scriptul descarcă repository-ul de pe GitHub, copiază `skills/lexro` în `~/.claude/skills/lexro` și înlocuiește o instalare LexRO mai veche, dacă există. Opțiuni:
+
+| Opțiune | macOS / Linux | Windows |
+|---|---|---|
+| Doar proiectul curent | `curl -fsSL …/install.sh \| bash -s -- --project` | `& ([scriptblock]::Create((irm …/install.ps1))) -Project` |
+| Folder ales | `… \| bash -s -- --dir <cale>` | `… -Dir <cale>` |
+| Dezinstalare | `… \| bash -s -- --uninstall` | `… -Uninstall` |
+| O anumită versiune | `… \| LEXRO_REF=<tag sau branch> bash` | `$env:LEXRO_REF="<tag sau branch>"` înainte de rulare |
+
+(`…` înseamnă `https://raw.githubusercontent.com/tiberiugabriel/LexRO/main`.)
+
+Un script descărcat de pe internet și trimis direct în terminal rulează cu permisiunile tale. Dacă preferi, deschide și citește întâi [`install.sh`](install.sh) sau [`install.ps1`](install.ps1), ori folosește metoda manuală de mai jos.
+
+##### B2. Manual
 
 **macOS / Linux (personal, toate proiectele):**
 
@@ -222,17 +312,17 @@ Get-ChildItem "$env:USERPROFILE\.claude\skills\lexro"
 **Dintr-o clonă a acestui repository:**
 
 ```bash
-git clone <url-repository> LexRO
-cp -R LexRO/lexro ~/.claude/skills/lexro
+git clone https://github.com/tiberiugabriel/LexRO.git
+cp -R LexRO/skills/lexro ~/.claude/skills/lexro
 ```
 
 Ca `git pull` să actualizeze automat skill-ul instalat, folosește un link simbolic în loc de copie:
 
 ```bash
-ln -s "$(pwd)/LexRO/lexro" ~/.claude/skills/lexro
+ln -s "$(pwd)/LexRO/skills/lexro" ~/.claude/skills/lexro
 ```
 
-**Doar pentru un proiect:** copiază folderul `lexro/` în `.claude/skills/lexro/` din proiectul tău.
+**Doar pentru un proiect:** copiază folderul `skills/lexro/` în `.claude/skills/lexro/` din proiectul tău.
 
 Claude Code urmărește folderele de skill-uri, așa că modificările se aplică de obicei fără restart. Dacă `~/.claude/skills` nu exista când a pornit sesiunea, repornește Claude Code.
 
@@ -259,26 +349,30 @@ Exemple de cereri:
 ### Actualizare și dezinstalare
 
 - **Aplicația Claude:** șterge skill-ul vechi din **Customize → Skills**, apoi încarcă noul `lexro.skill`.
-- **Claude Code:** înlocuiește folderul (`rm -rf ~/.claude/skills/lexro`, apoi reinstalezi) sau dă `git pull` dacă ai folosit link simbolic.
-- Pentru dezinstalare, șterge skill-ul din aplicație și/sau folderul `~/.claude/skills/lexro`.
+- **Claude Code:** rulează din nou aceeași comandă de instalare (`npx skills add …` sau scriptul de instalare). Dacă ai instalat manual, înlocuiește folderul sau dă `git pull` dacă ai folosit link simbolic.
+- **Dezinstalare din Claude Code:** `curl -fsSL https://raw.githubusercontent.com/tiberiugabriel/LexRO/main/install.sh | bash -s -- --uninstall` (sau `-Uninstall` cu `install.ps1`) ori, simplu, șterge folderul `~/.claude/skills/lexro`.
+- **Dezinstalare din aplicația Claude:** șterge skill-ul din **Customize → Skills**.
 
 ### Structura repository-ului
 
 ```
 LexRO/
 ├── README.md                 # acest fișier (EN + RO)
-├── lexro/                    # skill-ul
-│   ├── SKILL.md              # fluxul de lucru, regulile de bază, triggerul /lexro
-│   └── references/           # intake, fișiere pe domenii, surse, escaladare, formate
+├── install.sh                # instalator cu o comandă pentru Claude Code (macOS / Linux)
+├── install.ps1               # instalator cu o comandă pentru Claude Code (Windows)
+├── skills/
+│   └── lexro/                # skill-ul
+│       ├── SKILL.md          # fluxul de lucru, regulile de bază, triggerul /lexro
+│       └── references/       # intake, fișiere pe domenii, surse, escaladare, formate
 ├── dist/
-│   └── lexro.skill           # pachetul gata de încărcat (ZIP)
+│   └── lexro.skill           # pachetul gata de încărcat în aplicația Claude (ZIP)
 └── scripts/
     └── package.sh            # reconstruiește dist/lexro.skill
 ```
 
 ### Reconstruirea pachetului
 
-După ce modifici fișiere în `lexro/`, reconstruiește pachetul:
+După ce modifici fișiere în `skills/lexro/`, reconstruiește pachetul:
 
 ```bash
 ./scripts/package.sh
@@ -286,6 +380,6 @@ După ce modifici fișiere în `lexro/`, reconstruiește pachetul:
 
 ### Limite
 
-- `lexro/references/acts-registry.md` este o **hartă de pornire compilată de un model AI, neverificată act cu act**. Fiecare intrare are un nivel de încredere (H / M / ID?). Skill-ul reverifică actele live, dar corectarea registrului îmbunătățește rezultatele.
+- `skills/lexro/references/acts-registry.md` este o **hartă de pornire compilată de un model AI, neverificată act cu act**. Fiecare intrare are un nivel de încredere (H / M / ID?). Skill-ul reverifică actele live, dar corectarea registrului îmbunătățește rezultatele.
 - Adresele surselor oficiale sunt adrese de bază scrise din memorie; verifică-le o dată.
 - Skill-ul poate greși. Legislația se schimbă des, mai ales cea fiscală.

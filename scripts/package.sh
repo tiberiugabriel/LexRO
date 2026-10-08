@@ -1,13 +1,14 @@
 #!/usr/bin/env bash
-# Rebuilds dist/lexro.skill (a ZIP containing the lexro/ folder) from the files in lexro/.
-# Reconstruiește dist/lexro.skill (un ZIP care conține folderul lexro/) din fișierele din lexro/.
+# Rebuilds dist/lexro.skill (a ZIP containing the lexro/ folder) from skills/lexro/.
+# Reconstruiește dist/lexro.skill (un ZIP care conține folderul lexro/) din skills/lexro/.
 #
 # Usage / Utilizare:  ./scripts/package.sh
 
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-SKILL_DIR="$ROOT/lexro"
+SKILLS_DIR="$ROOT/skills"
+SKILL_DIR="$SKILLS_DIR/lexro"
 OUT="$ROOT/dist/lexro.skill"
 
 if [ ! -f "$SKILL_DIR/SKILL.md" ]; then
@@ -32,7 +33,9 @@ fi
 mkdir -p "$ROOT/dist"
 rm -f "$OUT"
 
-cd "$ROOT"
+# Zip from skills/ so the archive root is lexro/ (required by the Claude app upload).
+# Arhivăm din skills/ ca rădăcina arhivei să fie lexro/ (cerință pentru upload în aplicația Claude).
+cd "$SKILLS_DIR"
 zip -r -q "$OUT" lexro -x '*.DS_Store' -x '__MACOSX/*'
 
 echo "Built / Construit: $OUT"
