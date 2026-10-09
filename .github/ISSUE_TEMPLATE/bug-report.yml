@@ -1,0 +1,54 @@
+name: Bug report / Problemă tehnică
+description: Installation, packaging or skill behaviour problems. / Probleme de instalare, de pachet sau de comportament al skill-ului.
+title: "[Bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        For wrong or outdated law, use the **Legal inaccuracy** template instead.
+
+        Pentru legislație greșită sau depășită, folosește șablonul **Eroare juridică**.
+  - type: dropdown
+    id: where
+    attributes:
+      label: Where do you use LexRO? / Unde folosești LexRO?
+      options:
+        - Claude app (claude.ai web or desktop) / Aplicația Claude
+        - Claude Code
+        - Claude API
+        - Other / Altele
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: LexRO version / Versiunea LexRO
+      description: The `version` under `metadata` at the top of `SKILL.md`, or the release you downloaded. / `version` de sub `metadata` din antetul `SKILL.md`, sau versiunea descărcată.
+      placeholder: 1.0.0
+  - type: dropdown
+    id: install
+    attributes:
+      label: How did you install it? / Cum l-ai instalat?
+      options:
+        - Uploaded dist/lexro.skill
+        - npx skills add
+        - install.sh
+        - install.ps1
+        - Manual copy or symbolic link / Copiere manuală sau link simbolic
+        - Other / Altele
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened / Ce s-a întâmplat
+      description: Steps, the exact error message and what you expected. Remove personal data. / Pașii, mesajul exact de eroare și ce te așteptai să se întâmple. Elimină datele personale.
+    validations:
+      required: true
+  - type: dropdown
+    id: web
+    attributes:
+      label: Is web search / web fetch enabled? / Ai căutarea web activată?
+      options:
+        - Yes / Da
+        - No / Nu
+        - Not sure / Nu știu

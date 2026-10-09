@@ -1,0 +1,75 @@
+name: Legal inaccuracy / Eroare juridică
+description: An act, article, date, threshold or rule that LexRO gets wrong or that is out of date. / Un act, articol, termen, prag sau regulă greșită ori depășită.
+title: "[Legal] "
+labels: ["legal accuracy"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for helping keep LexRO accurate. Please point to an **official source** (Portalul Legislativ, Monitorul Oficial, EUR-Lex, CJEU, ANPC, ANSPDCP, ANAF or another authority). Secondary sources (law firm articles, blogs) are welcome as context, but a correction needs the official text. Do not include personal data or confidential details about your business.
+
+        Mulțumim că ajuți la menținerea corectitudinii LexRO. Indică o **sursă oficială** (Portalul Legislativ, Monitorul Oficial, EUR-Lex, CJUE, ANPC, ANSPDCP, ANAF sau altă autoritate). Sursele secundare (articole de la case de avocatură, bloguri) sunt binevenite ca context, dar o corectură are nevoie de textul oficial. Nu include date personale sau detalii confidențiale despre afacerea ta.
+
+        You can write in English or Romanian. / Poți scrie în engleză sau în română.
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What kind of problem is it? / Ce fel de problemă este?
+      options:
+        - Act or article cited incorrectly / Act sau articol citat greșit
+        - Act repealed or replaced / Act abrogat sau înlocuit
+        - Not yet applicable, or date wrong / Încă neaplicabil sau dată greșită
+        - Amended, old wording used / Modificat, se folosește forma veche
+        - Directive transposition wrong or missing / Transpunerea directivei greșită sau lipsă
+        - Wrong threshold, deadline, rate or amount / Prag, termen, cotă sau sumă greșită
+        - Authority guidance or practice misdescribed / Ghid sau practica autorității descrise greșit
+        - Missing obligation or act / Obligație sau act lipsă
+        - Other / Altele
+    validations:
+      required: true
+  - type: input
+    id: where
+    attributes:
+      label: Where does it appear? / Unde apare?
+      description: File and section, or the question you asked. / Fișierul și secțiunea, sau întrebarea pe care ai pus-o.
+      placeholder: skills/lexro/references/acts-registry.md
+    validations:
+      required: true
+  - type: textarea
+    id: current
+    attributes:
+      label: What LexRO says now / Ce spune LexRO acum
+    validations:
+      required: true
+  - type: textarea
+    id: correct
+    attributes:
+      label: What is correct / Ce este corect
+      description: The correct position, with article number and, where relevant, the date of entry into force or of the amendment. / Poziția corectă, cu numărul articolului și, după caz, data intrării în vigoare sau a modificării.
+    validations:
+      required: true
+  - type: textarea
+    id: sources
+    attributes:
+      label: Official source(s) / Sursă oficială
+      description: Links to the official text, ideally the consolidated version, with its date. / Linkuri către textul oficial, ideal forma consolidată, cu data ei.
+      placeholder: https://legislatie.just.ro/...
+    validations:
+      required: true
+  - type: dropdown
+    id: level
+    attributes:
+      label: Level / Nivel
+      multiple: true
+      options:
+        - Romania / România
+        - EU / UE
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checks / Verificări
+      options:
+        - label: I checked the official source on the date of this report. / Am verificat sursa oficială la data acestui raport.
+          required: true
+        - label: This report contains no personal data or confidential business details. / Raportul nu conține date personale sau detalii confidențiale.
+          required: true

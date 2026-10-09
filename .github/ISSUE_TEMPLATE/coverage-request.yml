@@ -1,0 +1,35 @@
+name: Coverage request / Propunere de acoperire
+description: A topic, business model, act or authority guidance that LexRO should cover or cover better. / Un subiect, model de afacere, act sau ghid pe care LexRO ar trebui să-l acopere.
+title: "[Coverage] "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Describe the situation in general terms, in English or Romanian. Do not include personal data or confidential details about your business.
+
+        Descrie situația în termeni generali, în engleză sau în română. Nu include date personale sau detalii confidențiale despre afacerea ta.
+  - type: textarea
+    id: topic
+    attributes:
+      label: What should LexRO cover? / Ce ar trebui să acopere LexRO?
+      description: The topic, act, sector or business model, and why it matters. / Subiectul, actul, sectorul sau modelul de afacere și de ce contează.
+    validations:
+      required: true
+  - type: textarea
+    id: example
+    attributes:
+      label: Example question / Exemplu de întrebare
+      placeholder: Vând telefoane recondiționate. Ce garanție trebuie să ofer?
+  - type: textarea
+    id: sources
+    attributes:
+      label: Official sources (if known) / Surse oficiale (dacă le știi)
+  - type: dropdown
+    id: level
+    attributes:
+      label: Level / Nivel
+      multiple: true
+      options:
+        - Romania / România
+        - EU / UE

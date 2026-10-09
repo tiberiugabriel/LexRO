@@ -1,5 +1,11 @@
 # LexRO
 
+[![Version](https://img.shields.io/badge/version-1.0.0-2563eb)](CHANGELOG.md)
+[![Updated](https://img.shields.io/badge/updated-2026--10--09-2563eb)](CHANGELOG.md)
+[![License: Apache 2.0 + Commons Clause](https://img.shields.io/badge/license-Apache%202.0%20%2B%20Commons%20Clause-blue)](LICENSE)
+[![Claude skill](https://img.shields.io/badge/Claude-skill-D97757?logo=claude&logoColor=white)](https://support.claude.com/en/articles/12512180-use-skills-in-claude)
+[![Jurisdiction: Romania and EU](https://img.shields.io/badge/jurisdiction-RO%20%2B%20EU-002B7F)](#what-it-covers)
+
 **[English](#english) · [Română](#română)**
 
 ---
@@ -32,6 +38,39 @@ LexRO is a Claude skill for **e-commerce, online platform and GDPR compliance in
 
 It always **answers in the language you write in** (English, Romanian or other languages).
 
+### Example
+
+> I run an online shop in Romania (SRL) selling engraved jewellery. A customer wants to send back a necklace engraved with her daughter's name, 10 days after delivery. There is nothing wrong with it. Do I have to accept the return?
+
+```
+Probably not. The 14-day right of withdrawal does not apply to goods made to
+the consumer's specifications or clearly personalised, and a name engraved at
+the customer's request usually falls in that category. This only covers a
+change of mind: if the necklace is not in conformity (faulty or different from
+the description), the customer keeps her rights under the legal guarantee of
+conformity.
+
+Level: YELLOW
+
+Based on:
+- OUG 34/2014 on consumer rights, art. 16 para. (1) lit. c).
+  VERIFIED_IN_FORCE, consolidated version of 27.03.2026
+  https://legislatie.just.ro/Public/DetaliiDocument/158913
+- OUG 140/2021 on contracts for the sale of goods (Directive 2019/771):
+  legal guarantee of conformity and remedies. VERIFIED_IN_FORCE
+  https://legislatie.just.ro/Public/DetaliiDocument/250044
+
+Depends on:
+- Did the customer choose the engraving, or is it a standard design you sell
+  to everyone? A standard design is not "personalised" and the 14 days apply.
+- Did you tell the customer before the order that this item cannot be
+  returned? That information is part of your pre-contract duties.
+- Do your terms or website promise a more generous returns policy? If so,
+  that promise binds you.
+```
+
+*Abridged and illustrative. In a real session LexRO first confirms your role, opens each act on the official source during the conversation and shows the version it relied on. Answers depend on the date and the facts you give.*
+
 ### Requirements
 
 - A Claude account with **skills** support (claude.ai web/desktop app, or Claude Code).
@@ -42,7 +81,7 @@ It always **answers in the language you write in** (English, Romanian or other l
 
 **Quick install for Claude Code:** `npx skills add tiberiugabriel/LexRO -g -a claude-code` or `curl -fsSL https://raw.githubusercontent.com/tiberiugabriel/LexRO/main/install.sh | bash`. Details below.
 
-The ready-to-upload package is **`dist/lexro.skill`** (a ZIP archive containing the `lexro/` folder).
+The ready-to-upload package is **`dist/lexro.skill`** (a ZIP archive containing the `lexro/` folder). Each version is also attached to its [GitHub release](https://github.com/tiberiugabriel/LexRO/releases/latest), with the changes listed in [`CHANGELOG.md`](CHANGELOG.md).
 
 #### Option A: Claude app (claude.ai web or desktop)
 
@@ -166,7 +205,10 @@ Example requests:
 ```
 LexRO/
 ├── README.md                 # this file (EN + RO)
+├── CHANGELOG.md              # changes per version
+├── CONTRIBUTING.md           # how to report errors and contribute (EN + RO)
 ├── LICENSE                   # Apache 2.0 with Commons Clause
+├── .github/                  # issue and pull request templates
 ├── install.sh                # one-command installer for Claude Code (macOS / Linux)
 ├── install.ps1               # one-command installer for Claude Code (Windows)
 ├── skills/
@@ -177,15 +219,22 @@ LexRO/
 ├── dist/
 │   └── lexro.skill           # ready-to-upload package for the Claude app (ZIP)
 └── scripts/
-    └── package.sh            # rebuilds dist/lexro.skill
+    ├── package.sh            # rebuilds dist/lexro.skill
+    └── ci.sh                 # local CI: runs every repository check
 ```
 
-### Rebuilding the package
+### Contributing
 
-After editing files in `skills/lexro/`, rebuild the package:
+Found an act that is wrong, repealed or not yet applicable? Please [report a legal inaccuracy](https://github.com/tiberiugabriel/LexRO/issues/new?template=legal-inaccuracy.yml) with a link to the official source. To suggest new coverage or report a bug, see [`CONTRIBUTING.md`](CONTRIBUTING.md).
+
+After editing files in `skills/lexro/`, rebuild the package and run the local CI:
 
 ```bash
 ./scripts/package.sh
+```
+
+```bash
+./scripts/ci.sh
 ```
 
 ### Limitations
@@ -236,6 +285,40 @@ LexRO este un skill Claude pentru **conformitatea în comerțul electronic, plat
 
 **Răspunde mereu în limba în care îi scrii** (română, engleză sau alte limbi).
 
+### Exemplu
+
+> Am un magazin online (SRL) și vând bijuterii gravate. O clientă vrea să returneze un colier gravat cu numele fiicei ei, la 10 zile de la livrare. Produsul nu are nicio problemă. Sunt obligat să accept returul?
+
+```
+Probabil nu. Dreptul de retragere de 14 zile nu se aplică bunurilor
+confecționate după specificațiile consumatorului sau personalizate în mod
+clar, iar un nume gravat la cererea clientei intră de regulă în această
+categorie. Excepția privește doar răzgândirea: dacă produsul nu este conform
+(defect sau diferit de descriere), clienta păstrează drepturile din garanția
+legală de conformitate.
+
+Nivel: GALBEN
+
+Temei:
+- OUG 34/2014 privind drepturile consumatorilor, art. 16 alin. (1) lit. c).
+  VERIFICAT – ÎN VIGOARE, forma consolidată din 27.03.2026
+  https://legislatie.just.ro/Public/DetaliiDocument/158913
+- OUG 140/2021 privind contractele de vânzare de bunuri (Directiva
+  2019/771): garanția legală de conformitate și remediile.
+  VERIFICAT – ÎN VIGOARE
+  https://legislatie.just.ro/Public/DetaliiDocument/250044
+
+Depinde de:
+- Clienta a ales gravura sau e un model standard pe care îl vinzi tuturor?
+  Un model standard nu e „personalizat”, iar cele 14 zile se aplică.
+- I-ai spus clientei înainte de comandă că produsul nu poate fi returnat?
+  Informarea face parte din obligațiile tale precontractuale.
+- Termenii sau site-ul tău promit o politică de retur mai generoasă? Dacă da,
+  promisiunea te obligă.
+```
+
+*Exemplu prescurtat și ilustrativ. Într-o sesiune reală, LexRO îți confirmă întâi rolul, deschide fiecare act pe sursa oficială în timpul conversației și arată versiunea pe care s-a bazat. Răspunsurile depind de dată și de faptele pe care le dai.*
+
 ### Cerințe
 
 - Un cont Claude cu suport pentru **skill-uri** (aplicația claude.ai web/desktop sau Claude Code).
@@ -246,7 +329,7 @@ LexRO este un skill Claude pentru **conformitatea în comerțul electronic, plat
 
 **Instalare rapidă pentru Claude Code:** `npx skills add tiberiugabriel/LexRO -g -a claude-code` sau `curl -fsSL https://raw.githubusercontent.com/tiberiugabriel/LexRO/main/install.sh | bash`. Detalii mai jos.
 
-Pachetul gata de încărcat este **`dist/lexro.skill`** (o arhivă ZIP care conține folderul `lexro/`).
+Pachetul gata de încărcat este **`dist/lexro.skill`** (o arhivă ZIP care conține folderul `lexro/`). Fiecare versiune e atașată și la [release-ul de pe GitHub](https://github.com/tiberiugabriel/LexRO/releases/latest), iar modificările sunt în [`CHANGELOG.md`](CHANGELOG.md).
 
 #### Varianta A: aplicația Claude (claude.ai web sau desktop)
 
@@ -372,7 +455,10 @@ Exemple de cereri:
 ```
 LexRO/
 ├── README.md                 # acest fișier (EN + RO)
+├── CHANGELOG.md              # modificările pe versiuni
+├── CONTRIBUTING.md           # cum raportezi erori și cum contribui (EN + RO)
 ├── LICENSE                   # Apache 2.0 cu Commons Clause
+├── .github/                  # șabloane pentru issue-uri și pull request-uri
 ├── install.sh                # instalator cu o comandă pentru Claude Code (macOS / Linux)
 ├── install.ps1               # instalator cu o comandă pentru Claude Code (Windows)
 ├── skills/
@@ -383,15 +469,22 @@ LexRO/
 ├── dist/
 │   └── lexro.skill           # pachetul gata de încărcat în aplicația Claude (ZIP)
 └── scripts/
-    └── package.sh            # reconstruiește dist/lexro.skill
+    ├── package.sh            # reconstruiește dist/lexro.skill
+    └── ci.sh                 # CI local: rulează toate verificările repository-ului
 ```
 
-### Reconstruirea pachetului
+### Contribuții
 
-După ce modifici fișiere în `skills/lexro/`, reconstruiește pachetul:
+Ai găsit un act greșit, abrogat sau încă neaplicabil? [Raportează o eroare juridică](https://github.com/tiberiugabriel/LexRO/issues/new?template=legal-inaccuracy.yml), cu link către sursa oficială. Pentru propuneri de acoperire nouă sau probleme tehnice, vezi [`CONTRIBUTING.md`](CONTRIBUTING.md#română).
+
+După ce modifici fișiere în `skills/lexro/`, reconstruiește pachetul și rulează CI-ul local:
 
 ```bash
 ./scripts/package.sh
+```
+
+```bash
+./scripts/ci.sh
 ```
 
 ### Limite
