@@ -1,6 +1,7 @@
 ---
 name: lexro
 description: Compliance guidance for e-commerce, online platforms and data protection (GDPR) in Romania and the EU, with mandatory verification of the version in force on official sources. ALWAYS use this skill when a message starts with /lexro. Also use it whenever the user asks, in any language, about an online shop, marketplace, SaaS, dropshipping, services sold online, withdrawal, returns, warranties, terms and conditions, privacy policy, cookies, newsletters, GDPR, ANSPDCP, ANPC, DSA, P2B, GPSR, product safety, VAT, OSS, IOSS, e-Factura, DAC7, online payments, NIS2, AI Act, Data Act, advertising, reviews, discounts, non-EU imports, DPAs, data breaches, or what legal obligations an online business has, even without saying legal or compliance. Romanian triggers include magazin online, drept de retragere, retur, garanție, termeni și condiții, politică de confidențialitate, date personale, ce obligații am, PFA, SRL.
+license: Apache-2.0 with Commons Clause (no selling). Complete terms in LICENSE.txt
 ---
 
 # E-commerce and GDPR compliance (Romania + EU)

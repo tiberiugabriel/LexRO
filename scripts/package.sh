@@ -25,6 +25,14 @@ if [ "$NAME" != "lexro" ]; then
   exit 1
 fi
 
+# The skill ships its own copy of the license; it must match the repo LICENSE.
+# Skill-ul include propria copie a licenței; trebuie să fie identică cu LICENSE din repo.
+if ! cmp -s "$ROOT/LICENSE" "$SKILL_DIR/LICENSE.txt"; then
+  echo "Error: skills/lexro/LICENSE.txt differs from LICENSE. Run: cp LICENSE skills/lexro/LICENSE.txt" >&2
+  echo "Eroare: skills/lexro/LICENSE.txt diferă de LICENSE. Rulează: cp LICENSE skills/lexro/LICENSE.txt" >&2
+  exit 1
+fi
+
 if ! command -v zip >/dev/null 2>&1; then
   echo "Error: 'zip' is not installed / nu este instalat." >&2
   exit 1

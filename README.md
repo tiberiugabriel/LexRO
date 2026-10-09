@@ -166,11 +166,13 @@ Example requests:
 ```
 LexRO/
 ├── README.md                 # this file (EN + RO)
+├── LICENSE                   # Apache 2.0 with Commons Clause
 ├── install.sh                # one-command installer for Claude Code (macOS / Linux)
 ├── install.ps1               # one-command installer for Claude Code (Windows)
 ├── skills/
 │   └── lexro/                # the skill
 │       ├── SKILL.md          # workflow, core rules, /lexro trigger
+│       ├── LICENSE.txt       # copy of LICENSE, shipped with the skill
 │       └── references/       # intake, domain files, sources, escalation, formats
 ├── dist/
 │   └── lexro.skill           # ready-to-upload package for the Claude app (ZIP)
@@ -191,6 +193,18 @@ After editing files in `skills/lexro/`, rebuild the package:
 - `skills/lexro/references/acts-registry.md` is a **starting map compiled by an AI model, not verified act by act**. Each entry has a confidence level (H / M / ID?). The skill re-verifies acts live, but correcting the registry improves results.
 - The URLs of official sources are base addresses written from memory; verify them once.
 - The skill can be wrong. Legislation changes often, especially tax rules.
+
+### License
+
+LexRO is licensed under the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0) with the [Commons Clause](https://commonsclause.com/) condition. See [`LICENSE`](LICENSE).
+
+In plain terms:
+
+- **You can** use LexRO for free, including inside your own business (for example, to check your own shop's compliance), modify it and share it.
+- **You cannot** sell it: you may not charge for LexRO itself, a modified version of it, or a product or service (including hosting, consulting or support) whose value comes entirely or substantially from LexRO.
+- When you share it, keep the `LICENSE` file and the copyright notice.
+
+This summary is for convenience only; the `LICENSE` file is the binding text. For uses not covered, contact the author.
 
 ---
 
@@ -358,11 +372,13 @@ Exemple de cereri:
 ```
 LexRO/
 ├── README.md                 # acest fișier (EN + RO)
+├── LICENSE                   # Apache 2.0 cu Commons Clause
 ├── install.sh                # instalator cu o comandă pentru Claude Code (macOS / Linux)
 ├── install.ps1               # instalator cu o comandă pentru Claude Code (Windows)
 ├── skills/
 │   └── lexro/                # skill-ul
 │       ├── SKILL.md          # fluxul de lucru, regulile de bază, triggerul /lexro
+│       ├── LICENSE.txt       # copie a LICENSE, inclusă în skill
 │       └── references/       # intake, fișiere pe domenii, surse, escaladare, formate
 ├── dist/
 │   └── lexro.skill           # pachetul gata de încărcat în aplicația Claude (ZIP)
@@ -383,3 +399,15 @@ După ce modifici fișiere în `skills/lexro/`, reconstruiește pachetul:
 - `skills/lexro/references/acts-registry.md` este o **hartă de pornire compilată de un model AI, neverificată act cu act**. Fiecare intrare are un nivel de încredere (H / M / ID?). Skill-ul reverifică actele live, dar corectarea registrului îmbunătățește rezultatele.
 - Adresele surselor oficiale sunt adrese de bază scrise din memorie; verifică-le o dată.
 - Skill-ul poate greși. Legislația se schimbă des, mai ales cea fiscală.
+
+### Licență
+
+LexRO este licențiat sub [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0) cu condiția [Commons Clause](https://commonsclause.com/). Vezi [`LICENSE`](LICENSE).
+
+Pe scurt:
+
+- **Poți** folosi LexRO gratuit, inclusiv în propria afacere (de exemplu, pentru a verifica conformitatea propriului magazin), îl poți modifica și distribui.
+- **Nu poți** să-l vinzi: nu ai voie să ceri bani pentru LexRO, pentru o versiune modificată a lui sau pentru un produs ori serviciu (inclusiv hosting, consultanță sau suport) a cărui valoare provine în totalitate sau în mare parte din LexRO.
+- Când îl distribui, păstrează fișierul `LICENSE` și mențiunea de copyright.
+
+Acest rezumat are doar rol informativ; textul obligatoriu este fișierul `LICENSE`. Pentru utilizări neacoperite, contactează autorul.
